@@ -1,101 +1,36 @@
-from pathlib import Path
 import argparse
-import json
-from datetime import datetime
+from storage import ensure_files_exist
+from tasks import add_task, update_task, delete_task, list_tasks, mark_in_progress, mark_done
+from utils import commands
 
-TASK_FILE = Path("tasks.json")
-META_FILE = Path("meta.json")
+def main() -> None:
+    ensure_files_exist()
 
-
-def create_files() -> None:
-    # Initialize tasks.json
-    if not TASK_FILE.exists():
-        TASK_FILE.write_text("[]")
-
-    # Initialize meta.json
-    if not META_FILE.exists():
-        META_FILE.write_text(json.dumps({"last_id": 0}, indent=4))
-
-
-def load_tasks() -> list:
-    try:
-        data = TASK_FILE.read_text().strip()
-        return json.loads(data) if data else []
-    except json.JSONDecodeError:
-        return []  # Recover from corrupted file
-
-
-def save_tasks(tasks: list) -> None:
-    TASK_FILE.write_text(json.dumps(tasks, indent=4))
-    last_id = tasks[-1]["id"] if tasks else 0
-    META_FILE.write_text(json.dumps({"last_id": last_id}, indent=4))
-
-
-def get_last_id() -> int:
-    try:
-        meta = json.loads(META_FILE.read_text())
-        return meta.get("last_id", 0)
-    except:
-        return 0
-
-
-def add_task(details) -> None:
-    if not details:
-        print("Error: Missing task description.")
-        return
-
-    last_id = get_last_id()
-    task_id = last_id + 1
-
-    task = {
-        "id": task_id,
-        "description": details[0],
-        "status": "todo",
-        "created_at": datetime.now().isoformat(),
-        "updated_at": datetime.now().isoformat()
-    }
-
-    tasks = load_tasks()
-    tasks.append(task)
-    save_tasks(tasks)
-
-    print(f"Task added with ID: {task_id}")
-
-
-def main(command, details) -> None:
-    create_files()
-
-    commands = [
-        "add", "update", "delete",
-        "mark-in-progress", "mark-done", "list"
-    ]
-
-    if command not in commands:
-        print("Available commands:")
-        for cmd in commands:
-            print(" -", cmd)
-        return
+    parser = argparse.ArgumentParser()
+    parser.add_argument("command", help="Command to execute")
+    parser.add_argument("details", nargs="*", help="Additional arguments")
+    args = parser.parse_args()
+    command = args.command
+    details = args.details
 
     if command == "add":
         add_task(details)
     elif command == "update":
-        pass
+        update_task(details)
     elif command == "delete":
-        pass
+        delete_task(details)
     elif command == "mark-in-progress":
-        pass
+        mark_in_progress(details)
     elif command == "mark-done":
-        pass
+        mark_done(details)
     elif command == "list":
-        pass
+        list_tasks(details)
+    else:
+        print(f"Error: Unknown command '{command}'.")
+        print("Available commands:")
+        for cmd in commands:
+            print(" -", cmd)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument("command", help="Command to execute")
-    parser.add_argument("details", nargs="*", help="Additional arguments")
-
-    args = parser.parse_args()
-
-    main(args.command, args.details)
+    main()
