@@ -1,0 +1,86 @@
+# -----------------------
+# OS / Editor Files
+# -----------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.log
+*.bak
+
+# VSCode
+.vscode/
+.history/
+
+# -----------------------
+# Node / JavaScript
+# -----------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build / Output folders
+dist/
+build/
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts
+*.js.map
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Cache
+.cache/
+.eslintcache
+
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+python-env/
+Pipfile.lock
+
+# Build / Packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Python bytecode cache
+*.python-version
+PYTHONPATH
+
+# Python tooling
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# -----------------------
+# Other Tools
+# -----------------------
+.idea/
+*.iml
+
+# -----------------------
+# Local storage (if any)
+# -----------------------
+tasks.json
