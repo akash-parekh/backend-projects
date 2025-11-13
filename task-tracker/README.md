@@ -129,13 +129,11 @@ Recommended order:
 -   Add comments where helpful.
 -   Write a clear README describing usage.
 
-
-
 ## **Project Structure**
+
     taskcli/
     │
     ├── main.py              # CLI entry point
     ├── storage.py           # load/save tasks, meta handling
     ├── tasks.py             # business logic (add, update, delete)
     └── utils.py             # helper functions (optional)
-
