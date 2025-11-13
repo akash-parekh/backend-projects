@@ -1,13 +1,15 @@
-from storage import get_next_id
+from datetime import datetime
+from typing import Dict, Any
 
-commands = ["add", "update", "delete","mark-in-progress", "mark-done", "list"]
+VALID_STATUSES = ["todo", "in-progress", "done"]  # Helps validation everywhere
 
-def create_task_object(description) -> dict:
-    from datetime import datetime
+
+def create_task_object(task_id: int, description: str) -> Dict[str, Any]:
+    now = datetime.now().isoformat()
     return {
-        "id": get_next_id(),
+        "id": task_id,
         "description": description,
         "status": "todo",
-        "created_at": datetime.now().isoformat(),
-        "updated_at": datetime.now().isoformat()
+        "created_at": now,
+        "updated_at": now,
     }

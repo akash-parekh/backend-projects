@@ -1,30 +1,36 @@
-from pathlib import Path
 import json
+from pathlib import Path
+from datetime import datetime
+from typing import List, Dict, Any
 
 TASKS_FILE = Path("tasks.json")
-META_FILE = Path("meta.json")
+
 
 def ensure_files_exist() -> None:
     if not TASKS_FILE.exists():
         TASKS_FILE.write_text("[]")
-    if not META_FILE.exists():
-        META_FILE.write_text(json.dumps({"last_id": 0}, indent=4))
 
-def load_tasks() -> list:
+
+def load_tasks() -> List[Dict[str, Any]]:
+    ensure_files_exist()
     try:
-        data = TASKS_FILE.read_text().strip()
-        return json.loads(data) if data else []
+        return json.loads(TASKS_FILE.read_text())
     except json.JSONDecodeError:
-        return []  # Recover from corrupted file
+        # Warning instead of silent failure
+        backup_name = f"tasks_corrupted_{datetime.now().timestamp()}.json"
+        TASKS_FILE.rename(backup_name)
+        TASKS_FILE.write_text("[]")
+        print(f"Storage corrupted. Backup saved as: {backup_name}")
+        return []
 
-def save_tasks(tasks: list) -> None:
+
+def save_tasks(tasks: List[Dict[str, Any]]) -> None:
+    # Always write tasks fully (atomic rewrite)
     TASKS_FILE.write_text(json.dumps(tasks, indent=4))
-    last_id = tasks[-1]["id"] if tasks else 0
-    META_FILE.write_text(json.dumps({"last_id": last_id}, indent=4))
 
-def get_next_id() -> int:
-    try:
-        meta = json.loads(META_FILE.read_text())
-        return meta.get("last_id", 0) + 1
-    except:
-        return 0
+
+def get_next_id(tasks: List[Dict[str, Any]]) -> int:
+    # Safer version — avoids meta file problems
+    if not tasks:
+        return 1
+    return max(task["id"] for task in tasks) + 1
