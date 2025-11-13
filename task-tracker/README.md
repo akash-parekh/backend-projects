@@ -7,6 +7,8 @@ The application should accept commands via positional arguments, store tasks in 
 
 This project reinforces skills in filesystem operations, parsing CLI inputs, working with JSON, and designing a basic command-line tool.
 
+[Link to Project](https://roadmap.sh/projects/task-tracker)
+
 ---
 
 ## **Core Features**
