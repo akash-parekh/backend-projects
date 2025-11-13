@@ -1,5 +1,5 @@
 import argparse
-from tasks import (
+from .tasks import (
     add_task, update_task, delete_task,
     list_tasks, mark_in_progress, mark_done
 )

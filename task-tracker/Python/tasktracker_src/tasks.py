@@ -1,8 +1,8 @@
 from typing import List
 from datetime import datetime
 
-from storage import load_tasks, save_tasks, get_next_id
-from utils import create_task_object, VALID_STATUSES
+from .storage import load_tasks, save_tasks, get_next_id
+from .utils import create_task_object, VALID_STATUSES
 
 
 def _update_timestamp(task):
