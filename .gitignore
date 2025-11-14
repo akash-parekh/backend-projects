@@ -1,0 +1,38 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Local JSON storage files
+tasks.json
+tasks_corrupted_*.json
+
+# Pytest cache
+.pytest_cache/
+
+# IDE / Editor files
+.vscode/
+.idea/
+
+# macOS metadata
+**/.DS_Store
+**/.DS_Store?
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
