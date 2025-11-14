@@ -6,5 +6,6 @@ Several backend-focused projects built using both **JavaScript** and **Python** 
 
 1. [Task Tracker](./task-tracker/README.md)
    A CLI application for tracking tasks and managing your to-do list.
-   
-   https://roadmap.sh/projects/task-tracker
+
+2. [Github User Activity](./github-user-activity-README.md)
+   Use GitHub API to fetch user activity and display it in the terminal.
