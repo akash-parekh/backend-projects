@@ -1,0 +1,17 @@
+[project]
+name = "tasktracker"
+version = "1.0.0"
+description = "CLI Task Tracker"
+readme = "README.md"
+authors = [{ name = "Akash Parekh" }]
+requires-python = ">=3.9"
+
+[tool.setuptools]
+packages = ["tasktracker_src"]
+
+[project.scripts]
+task = "tasktracker_src.app:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
