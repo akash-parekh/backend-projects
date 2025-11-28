@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>Unit Conversion</title>
+        <link rel="stylesheet" href="style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <main>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>Unit Conversion</h1>
+                <button id="dark-mode-toggle" title="Toggle dark mode" aria-label="Toggle dark mode" style="margin-left: 12px;">🌙</button>
+            </div>
+            <nav class="tabs" role="tablist" aria-label="Conversion types">
+                <div
+                    class="tab active"
+                    data-type="height"
+                    role="tab"
+                    aria-selected="true"
+                >
+                    Height
+                </div>
+                <div
+                    class="tab"
+                    data-type="weight"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    Weight
+                </div>
+                <div
+                    class="tab"
+                    data-type="temperature"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    Temperature
+                </div>
+            </nav>
+            <section class="panel" id="conversion-panel">
+                <!-- Base template form (same for all tabs) -->
+                <form id="convert-form" onsubmit="return false;">
+                    <input type="hidden" id="type" name="type" value="height" />
+                    <label for="from-unit">
+                        From Units
+                        <select id="from-unit" required></select>
+                    </label>
+                    <label for="to-unit">
+                        To Units
+                        <select id="to-unit" required></select>
+                    </label>
+                    <label for="value">
+                        Value
+                        <input id="value" type="number" step="any" required />
+                    </label>
+                    <div style="margin-top: 12px">
+                        <button id="convert-btn" type="button">Convert</button>
+                        <span id="status" style="margin-left: 12px"></span>
+                    </div>
+                </form>
+            </section>
+            <!-- Modal for output -->
+            <div
+                id="result-modal"
+                class="modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="result-title"
+            >
+                <div class="card">
+                    <h3 id="result-title">Result</h3>
+                    <p id="result-text"></p>
+                    <button id="close-modal">Close</button>
+                </div>
+            </div>
+        </main>
+        <script src="main.js" defer></script>
+        <script defer>
+        // Dark mode toggle logic
+        const darkToggle = document.getElementById('dark-mode-toggle');
+        const root = document.documentElement;
+        function setDarkMode(on) {
+            if (on) {
+                root.classList.add('dark');
+                darkToggle.textContent = '☀️';
+            } else {
+                root.classList.remove('dark');
+                darkToggle.textContent = '🌙';
+            }
+        }
+        // Persist mode in localStorage
+        darkToggle.addEventListener('click', () => {
+            const isDark = !root.classList.contains('dark');
+            setDarkMode(isDark);
+            localStorage.setItem('unitconv-dark', isDark ? '1' : '0');
+        });
+        // On load, set mode from localStorage or system
+        (function() {
+            const saved = localStorage.getItem('unitconv-dark');
+            if (saved === '1' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                setDarkMode(true);
+            }
+        })();
+        </script>
+    </body>
+</html>
